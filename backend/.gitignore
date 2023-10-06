@@ -1,6 +1,8 @@
-*.ts
-!*.d.ts
-
 # CDK asset staging directory
 .cdk.staging
 cdk.out
+
+env.json
+event.json
+.env
+.env.local

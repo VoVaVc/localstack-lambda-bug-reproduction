@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  localstack:
+    image: localstack/localstack:latest
+    healthcheck:
+      test: "bash -c 'AWS_ACCESS_KEY_ID=fake AWS_SECRET_ACCESS_KEY=fake aws --endpoint-url=http://localhost:4566 s3 ls'"
+      interval: 5s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+    restart: on-failure
+    environment:
+      DATA_DIR: /tmp/localstack/data
+      DEBUG: 1
+      DOCKER_HOST: unix:///var/run/docker.sock
+      LOCALSTACK_SERVICES: s3,lambda,sqs
+      LOCALSTACK_DEFAULT_REGION: us-west-1
+      EXTRA_CORS_ALLOWED_ORIGINS: http://localhost:3000
+      DISABLE_CORS_CHECKS: 1
+      DISABLE_CUSTOM_CORS_S3: 1
+    ports:
+      - "4566:4566"
+    volumes:
+      - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"

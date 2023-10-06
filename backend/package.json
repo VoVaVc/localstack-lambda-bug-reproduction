@@ -1,0 +1,40 @@
+{
+	"name": "localstack-lambda-bug-reproduction",
+	"version": "0.1.0",
+	"scripts": {
+		"start": "npm run local:dev && npm run local:watch",
+		"local:dev": "cdklocal synth && cdklocal bootstrap --all && cdklocal deploy --all --require-approval never --debug",
+		"local:watch": "cdklocal watch --all --require-approval never",
+		"local": "cdklocal",
+		"lint": "npm run lint:cdk & npm run lint:api",
+		"lint:cdk": "cd ./lib && ts-node ../build-scripts/lint.ts",
+		"lint:api": "cd ./api && ts-node ../build-scripts/lint.ts",
+		"synth": "cdk synth --all",
+		"deploy": "cdk synth --all && cdk bootstrap --all --force && cdk deploy --all --require-approval never",
+		"ci:checks": "pnpm run typecheck && pnpm run lint:ci"
+	},
+	"dependencies": {
+		"aws-cdk-lib": "^2.99.1",
+		"constructs": "^10.0.0",
+		"dotenv": "^16.3.1",
+		"env-var": "^7.3.1",
+		"esbuild": "^0.17.9",
+		"source-map-support": "^0.5.21"
+	},
+	"devDependencies": {
+		"@env42/template": "^0.0.1",
+		"@types/node": "20.1.7",
+		"@typescript-eslint/eslint-plugin": "^5.59.9",
+		"@typescript-eslint/parser": "^5.59.9",
+		"colors": "^1.4.0",
+		"eslint": "8.42.0",
+		"eslint-config-prettier": "^8.8.0",
+		"eslint-plugin-import": "^2.27.5",
+		"eslint-plugin-prettier": "^4.2.1",
+		"eslint-plugin-unused-imports": "^2.0.0",
+		"ts-node": "^10.9.1",
+		"tsconfig-paths": "^4.2.0",
+		"tsx": "^3.12.7",
+		"typescript": "~5.0.4"
+	}
+}
